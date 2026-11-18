@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c4redyh31qwix"]
+
+[ext_resource type="Script" uid="uid://c05843oi13xci" path="res://Scripts/ui.gd" id="1_nxvpl"]
+[ext_resource type="Texture2D" uid="uid://dbljlhcqjikea" path="res://Sprites/Crosshair.png" id="1_w371h"]
+
+[node name="Control" type="Control" unique_id=58356884]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_nxvpl")
+
+[node name="Crosshair" type="Sprite2D" parent="." unique_id=1389791956]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_w371h")

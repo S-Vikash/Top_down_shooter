@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://deyoycdkj6km7"]
+
+[ext_resource type="Script" uid="uid://d0o0a51xottio" path="res://Scripts/player.gd" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://b6wk7qxjulbxq" path="res://Scripts/gun.gd" id="2_cvnsp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4afsq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4afsq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4afsq"]
+size = Vector3(0.5, 0.3, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4afsq"]
+top_radius = 0.1
+bottom_radius = 0.05
+height = 1.2192383
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vgqql"]
+radius = 2.8135276
+
+[node name="Player" type="CharacterBody3D" unique_id=1515107230 node_paths=PackedStringArray("player_body")]
+script = ExtResource("1_v0iea")
+player_body = NodePath("Mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1012447068]
+shape = SubResource("CapsuleShape3D_4afsq")
+
+[node name="Mesh" type="Node3D" parent="." unique_id=259358364]
+
+[node name="Body" type="MeshInstance3D" parent="Mesh" unique_id=2119703365]
+mesh = SubResource("CapsuleMesh_4afsq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh" unique_id=709403831]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50849545, -0.52866197)
+mesh = SubResource("BoxMesh_4afsq")
+
+[node name="Gun_pivot" type="Node3D" parent="Mesh" unique_id=1949866243 node_paths=PackedStringArray("player_mesh")]
+transform = Transform3D(0.99438304, 0, 0.10584227, 0, 1, 0, -0.10584227, 0, 0.99438304, 0, 0, 0)
+script = ExtResource("2_cvnsp")
+player_mesh = NodePath("..")
+aim_speed = 50.0
+
+[node name="Gun" type="MeshInstance3D" parent="Mesh/Gun_pivot" unique_id=1348395397]
+transform = Transform3D(0.99999356, 0.00043070316, 0.0036144778, 0.0036221058, -0.019244866, -0.99980825, -0.00036101043, 0.99981475, -0.019246291, 0.41668963, 0.43788627, -0.82993054)
+mesh = SubResource("CylinderMesh_4afsq")
+
+[node name="Muzzle" type="Node3D" parent="Mesh/Gun_pivot/Gun" unique_id=288004558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -7.1054274e-15, 1, -0.007082224, -0.77947235, 5.9604645e-08)
+
+[node name="Enemy_detection_zone" type="Area3D" parent="Mesh" unique_id=346066332]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Enemy_detection_zone" unique_id=1438288932]
+transform = Transform3D(1, 0, 0, 0, 0.8668883, 0.4985024, 0, -0.4985024, 0.8668883, 0, 0.97480226, -2.9145126)
+shape = SubResource("SphereShape3D_vgqql")
+
+[connection signal="body_entered" from="Mesh/Enemy_detection_zone" to="." method="_on_enemy_detection_zone_body_entered"]
+[connection signal="body_exited" from="Mesh/Enemy_detection_zone" to="." method="_on_enemy_detection_zone_body_exited"]
